@@ -346,11 +346,13 @@ if (-not (Get-Command kubectl -ErrorAction SilentlyContinue)) {
     # Check if the installation was successful
     if (Get-Command kubectl -ErrorAction SilentlyContinue) {
         Write-Output "kubectl installed successfully."
+        kubectl completion powershell | Out-String | Invoke-Expression
     } else {
         Write-Output "Failed to install kubectl."
     }
 } else {
-    Write-Output "kubectl is already installed."
+    Write-Output "kubectl is already installed. Initializing..." 
+    kubectl completion powershell | Out-String | Invoke-Expression
 }
 if (Get-Command zoxide -ErrorAction SilentlyContinue) {
     Invoke-Expression (& { (zoxide init --cmd cd powershell | Out-String) })
