@@ -34,7 +34,7 @@ $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
 if (Test-Path($ChocolateyProfile)) {
     Import-Module "$ChocolateyProfile"
 }
-Import-Module git-posh
+Import-Module posh-git
 
 # Check for Profile Updates
 function Update-Profile {
