@@ -44,7 +44,7 @@ function Update-Profile {
     }
 
     try {
-        $url = "https://raw.githubusercontent.com/ChrisTitusTech/powershell-profile/main/Microsoft.PowerShell_profile.ps1"
+        $url = "https://raw.githubusercontent.com/mateuszkozako/powershell-profile/main/Microsoft.PowerShell_profile.ps1"
         $oldhash = Get-FileHash $PROFILE
         Invoke-RestMethod $url -OutFile "$env:temp/Microsoft.PowerShell_profile.ps1"
         $newhash = Get-FileHash "$env:temp/Microsoft.PowerShell_profile.ps1"
@@ -336,6 +336,22 @@ function Get-Theme {
 
 ## Final Line to set prompt
 Get-Theme
+# Check if kubectl is installed
+if (-not (Get-Command kubectl -ErrorAction SilentlyContinue)) {
+    Write-Output "kubectl not found. Installing via winget..."
+    
+    # Install kubectl using winget
+    winget install Kubernetes.kubectl
+    
+    # Check if the installation was successful
+    if (Get-Command kubectl -ErrorAction SilentlyContinue) {
+        Write-Output "kubectl installed successfully."
+    } else {
+        Write-Output "Failed to install kubectl."
+    }
+} else {
+    Write-Output "kubectl is already installed."
+}
 if (Get-Command zoxide -ErrorAction SilentlyContinue) {
     Invoke-Expression (& { (zoxide init --cmd cd powershell | Out-String) })
 } else {
