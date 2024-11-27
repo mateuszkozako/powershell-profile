@@ -256,6 +256,12 @@ function reload-profile {
     & $profile
 }
 
+function refresh-envvars {
+    $userPath = [System.Environment]::GetEnvironmentVariable("Path", "User")
+    $machinePath = [System.Environment]::GetEnvironmentVariable("Path", "Machine")
+    $env:Path = "$userPath;$machinePath"
+}
+
 function unzip ($file) {
     Write-Output("Extracting", $file, "to", $pwd)
     $fullFile = Get-ChildItem -Path $pwd -Filter $file | ForEach-Object { $_.FullName }
